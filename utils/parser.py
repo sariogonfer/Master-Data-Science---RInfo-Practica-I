@@ -12,4 +12,4 @@ def html2txt_parser_dir(in_path, out_path=None):
     out_path = out_path if out_path else in_path
     for html in [h for h in os.listdir(in_path) if h.endswith('.html')]:
         html2txt_parser(os.path.join(in_path, html),
-                        os.path.join(out_path, html))
+                        os.path.join(out_path, html.replace('html', 'txt')))
