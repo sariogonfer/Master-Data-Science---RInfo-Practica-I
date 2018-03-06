@@ -1,3 +1,4 @@
+from time import time
 import os
 import pprint
 import re
@@ -42,6 +43,26 @@ def cluster_texts(texts, cluster_number, distance):
     return clusters
 
 
+def timer_decorator(func):
+    def func_wrapper(*args):
+        start = time()
+        res = func(*args)
+        end = time()
+        print("Tiempo total de ejecución {:.2f}".format((start - end) / 100))
+        return res
+    return func_wrapper
+
+
+cases = list()
+
+
+def register_case(func):
+    cases.append(func)
+    def func_wrapper(*args):
+        return func(*args)
+    return func_wrapper
+
+@timer_decorator
 def evaluate(func, corpus_dir="./corpus_text"):
     texts = []
     for path in sorted([f for f in os.listdir(corpus_dir)
@@ -52,18 +73,38 @@ def evaluate(func, corpus_dir="./corpus_text"):
     test = cluster_texts(texts, 5, "cosine")
     return adjusted_rand_score(REFERENCE, test)
 
+
 def bulk_evaluate(*funcs):
     print("Reference: " , ", ".join([str(r) for r in REFERENCE]))
     for func in funcs:
         print("Evaluando %s" % func.__name__)
         print("Puntuacion: ", evaluate(func))
 
+
+@register_case
 def case_1(f_):
+    """ Ninguna transformación. """
+
     return nltk.word_tokenize(f_.read())
 
+
+@register_case
 def case_2(f_):
+    """ Elimina las stopwords tanto españolas como inglesas. """
+
     return [w for w in case_1(f_)
             if w not in nltk.corpus.stopwords.words(['spanish', 'english'])]
 
+
+def print_cases():
+    print()
+    for i, func in enumerate(cases):
+        print('{} .- {}'.format(i, func.__doc__))
+
 if __name__ == "__main__":
-    bulk_evaluate(case_1, case_2)
+    while True:
+        print_cases()
+        opt = input("Seleciona una opción, (a) para todos o (q) para sallir.")
+        if opt.lower() == 'q':
+            break
+        print('Score: ', evaluate(cases[int(opt)]))
