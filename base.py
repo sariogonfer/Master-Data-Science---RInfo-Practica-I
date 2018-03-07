@@ -81,19 +81,74 @@ def bulk_evaluate(*funcs):
         print("Puntuacion: ", evaluate(func))
 
 
+def _word_tokenize(in_):
+    s = in_ if isinstance(in_, str) else in_.read()
+    return nltk.word_tokenize(s)
+
+
+def _to_lower_case(tokens):
+    return [t.lower() for t in tokens]
+
+
+def _remove_puntuation(tokens):
+    import string
+
+    return [t for t in tokens if t not in string.punctuation]
+
+
+def _remove_stop_words(tokens, langs = ['english']):
+    return [t for t in tokens if t not in nltk.corpus.stopwords.words(langs)]
+
+
+def _translate_text(f_, target='EN'):
+    import deepl
+
+    return deepl.translate(f_.read(), target=target)[0]
+
+
 @register_case
 def case_1(f_):
     """ Ninguna transformación. """
 
-    return nltk.word_tokenize(f_.read())
+    return _word_tokenize(f_)
 
 
 @register_case
 def case_2(f_):
-    """ Elimina las stopwords tanto españolas como inglesas. """
+    """ Convierte los tokens a minusculas. """
 
-    return [w for w in case_1(f_)
-            if w not in nltk.corpus.stopwords.words(['spanish', 'english'])]
+    tokens = _word_tokenize(f_)
+    return _to_lower_case(tokens)
+
+
+@register_case
+def case_3(f_):
+    """ Convierte a minusculas y elimina signos de puntuacion. """
+
+    tokens = _word_tokenize(f_)
+    tokens = _to_lower_case(tokens)
+    return _remove_puntuation(tokens)
+
+
+@register_case
+def case_4(f_):
+    """ Lo anterior y elimina las stopwords es español e ingles. """
+
+    tokens = _word_tokenize(f_)
+    tokens = _to_lower_case(tokens)
+    tokens = _remove_puntuation(tokens)
+    return _remove_stop_words(tokens, langs=['english', 'spanish'])
+
+
+@register_case
+def case_5(f_):
+    """ Traduccimos los textos en español a ingles. """
+
+    text = _translate_text(f_)
+    tokens = _word_tokenize(text)
+    tokens = _to_lower_case(tokens)
+    tokens = _remove_puntuation(tokens)
+    return _remove_stop_words(tokens)
 
 
 def print_cases():
