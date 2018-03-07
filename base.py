@@ -100,10 +100,24 @@ def _remove_stop_words(tokens, langs = ['english']):
     return [t for t in tokens if t not in nltk.corpus.stopwords.words(langs)]
 
 
-def _translate_text(f_, target='EN'):
+def _translate_text(f_, method='textblob', target='en'):
+    from textblob import TextBlob
+
+    s = f_.read()
+    tb = TextBlob(s)
+    if TextBlob(s).detect_language() == target:
+        return s
+    if method == 'textblob':
+        return str(tb.translate(to=target))
+    else:
+        return _translate_deepl(s)
+
+
+def _translate_deepl(s, target='EN'):
     import deepl
 
-    return deepl.translate(f_.read(), target=target)[0]
+    return '\n'.join([deepl.translate(ss, target=target)[0]
+                      for ss in s.split('.')])
 
 
 @register_case
@@ -142,9 +156,20 @@ def case_4(f_):
 
 @register_case
 def case_5(f_):
-    """ Traduccimos los textos en español a ingles. """
+    """ Traducdo con TextBlob. """
 
     text = _translate_text(f_)
+    tokens = _word_tokenize(text)
+    tokens = _to_lower_case(tokens)
+    tokens = _remove_puntuation(tokens)
+    return _remove_stop_words(tokens)
+
+
+@register_case
+def case_6(f_):
+    """ Traducido con deepl. """
+
+    text = _translate_text(f_, method='deepl')
     tokens = _word_tokenize(text)
     tokens = _to_lower_case(tokens)
     tokens = _remove_puntuation(tokens)
