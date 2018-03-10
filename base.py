@@ -253,6 +253,13 @@ def case_10(f_):
             if w.label_ in ['GPE', 'PERSON', 'NORP', 'ORG', 'DATE']] + \
             most_common_nouns)
 
+@register_case
+def case_11(f_):
+    """ Con entidades nombradas filtradas y mas comunes eliminando duplicados. """
+    
+    #Devolvemos
+    return set(case_10(f_))
+
 
 def print_cases():
     print()
