@@ -8,9 +8,11 @@ from sklearn.metrics.cluster import *
 from sklearn.metrics.cluster import adjusted_rand_score
 import nltk
 import numpy
+import spacy
 
 from utils.parser import html2txt_parser_dir
 
+nlp = spacy.load('en')
 
 REFERENCE = [0, 5, 0, 0, 0, 2, 2, 2, 3, 5, 5, 5, 5, 5, 4, 4, 4, 4, 3, 0, 2, 5]
 
@@ -71,6 +73,8 @@ def evaluate(func, corpus_dir="./corpus_text"):
             tokens = func(f_)
             texts.append(nltk.Text(tokens))
     test = cluster_texts(texts, 5, "cosine")
+    print("Clusters obtenidos: ", test)
+    print("Clusters esperados: ", REFERENCE)
     return adjusted_rand_score(REFERENCE, test)
 
 
@@ -84,6 +88,12 @@ def bulk_evaluate(*funcs):
 def _word_tokenize(in_):
     s = in_ if isinstance(in_, str) else in_.read()
     return nltk.word_tokenize(s)
+
+
+def _lemmatizer(text, expanded_stopwords=[], pos=[]):
+    return [w.lemma_ for w in nlp(text) if (not (w.is_stop or str(w) in \
+                expanded_stopwords or w.is_punct)) and \
+                (w.pos_ in pos)]
 
 
 def _to_lower_case(tokens):
@@ -100,6 +110,17 @@ def _remove_stop_words(tokens, langs = ['english']):
     return [t for t in tokens if t not in nltk.corpus.stopwords.words(langs)]
 
 
+def _remove_expanded_stop_words(tokens):
+    expanded_stopwords =  nltk.corpus.stopwords.words('english') + ['the',
+            'say', '-PRON-', '', 'people', 'year', 'take','international',
+            'state', 'new', 'try', 'report', 'leader','government', 'tell',
+            'minister', 'leave','support', 'region', 'work', 'want', 'call',
+            'continue','in', 'time', 'week', 'member', 'need', 'policy',
+            'news','country', 'later', 'receive', 'force', 'face', 'public',
+            'sign']
+    return [t for t in tokens if t not in expanded_stopwords]
+
+
 def _translate_text(f_, method='textblob', target='en'):
     from textblob import TextBlob
 
@@ -111,6 +132,13 @@ def _translate_text(f_, method='textblob', target='en'):
         return str(tb.translate(to=target))
     else:
         return _translate_deepl(s)
+
+
+def _get_named_entities(text, languague='en'):
+    import spacy
+
+    nlp = spacy.load('en')
+    return nlp(text).ents
 
 
 def _translate_deepl(s, target='EN'):
@@ -174,6 +202,57 @@ def case_6(f_):
     tokens = _to_lower_case(tokens)
     tokens = _remove_puntuation(tokens)
     return _remove_stop_words(tokens)
+
+
+@register_case
+def case_7(f_):
+    """ Stopwords ampliadas para el corpus. """
+
+    text = _translate_text(f_, method='deepl')
+    tokens = _word_tokenize(text)
+    tokens = _to_lower_case(tokens)
+    tokens = _remove_puntuation(tokens)
+    return _remove_expanded_stop_words(tokens)
+
+
+@register_case
+def case_8(f_):
+    """ Con entidades nombradas. """
+
+    text = _translate_text(f_)
+    return [str(w) for w in _get_named_entities(text)]
+
+@register_case
+def case_9(f_):
+    """ Con entidades nombradas filtradas """
+
+    text = _translate_text(f_)
+    return [str(w) for w in _get_named_entities(text) if w.label_ \
+            in ['GPE', 'PERSON', 'NORP', 'ORG']]
+
+
+@register_case
+def case_10(f_):
+    """ Con entidades nombradas filtradas y mas comunes. """
+    from collections import Counter
+
+    expanded_stopwords =  ['the',
+            'say', '-PRON-', '', 'people', 'year', 'take','international',
+            'state', 'new', 'try', 'report', 'leader','government', 'tell',
+            'minister', 'leave','support', 'region', 'work', 'want', 'call',
+            'continue','in', 'time', 'week', 'member', 'need', 'policy',
+            'news','country', 'later', 'receive', 'force', 'face', 'public',
+            'sign']
+
+
+    text = _translate_text(f_)
+    tokens = _lemmatizer(text, expanded_stopwords=expanded_stopwords,
+                         pos=['NOUN'])
+    most_common_nouns = [c[0] for c in Counter(tokens).most_common(5)]
+    print(most_common_nouns)
+    return _to_lower_case([str(w) for w in _get_named_entities(text) \
+            if w.label_ in ['GPE', 'PERSON', 'NORP', 'ORG']] + \
+            most_common_nouns)
 
 
 def print_cases():
