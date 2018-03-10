@@ -249,9 +249,8 @@ def case_10(f_):
     tokens = _lemmatizer(text, expanded_stopwords=expanded_stopwords,
                          pos=['NOUN'])
     most_common_nouns = [c[0] for c in Counter(tokens).most_common(5)]
-    print(most_common_nouns)
     return _to_lower_case([str(w) for w in _get_named_entities(text) \
-            if w.label_ in ['GPE', 'PERSON', 'NORP', 'ORG']] + \
+            if w.label_ in ['GPE', 'PERSON', 'NORP', 'ORG', 'DATE']] + \
             most_common_nouns)
 
 
