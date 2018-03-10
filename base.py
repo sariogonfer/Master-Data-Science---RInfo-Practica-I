@@ -184,7 +184,7 @@ def case_4(f_):
 
 @register_case
 def case_5(f_):
-    """ Traducdo con TextBlob. """
+    """ Traducido con TextBlob. """
 
     text = _translate_text(f_)
     tokens = _word_tokenize(text)
@@ -262,7 +262,7 @@ def print_cases():
 if __name__ == "__main__":
     while True:
         print_cases()
-        opt = input("Seleciona una opción, (a) para todos o (q) para sallir.")
+        opt = input("Seleciona una opción, (a) para todos o (q) para salir: ")
         if opt.lower() == 'q':
             break
         print('Score: ', evaluate(cases[int(opt)]))
