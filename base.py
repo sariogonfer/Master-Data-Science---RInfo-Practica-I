@@ -52,9 +52,14 @@ def timer_decorator(func):
         start = time()
         res = func(*args)
         end = time()
-        print("Tiempo total de ejecución {:.2f}".format((start - end) / 100))
+        diff_time = end - start
+        if (diff_time < 60):
+            print("Tiempo total de ejecución {:.2f} segundos".format(diff_time))
+        else:
+            print("Tiempo total de ejecución {:.2f} minutos".format(diff_time/60))
         return res
     return func_wrapper
+
 
 
 cases = list()
