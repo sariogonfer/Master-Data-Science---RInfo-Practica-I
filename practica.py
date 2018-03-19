@@ -190,7 +190,7 @@ def translate_text(f_, method='textblob', target='en'):
     if method == 'textblob':
         return str(tb.translate(to=target))
     else:
-        return _translate_deepl(s)
+        return translate_deepl(s)
 
 
 def get_named_entities(text, languague='en'):
