@@ -5,6 +5,7 @@ import os
 import pprint
 import re
 
+from functools import lru_cache
 from IPython.display import display, HTML
 from sklearn.cluster import AgglomerativeClustering
 from sklearn.metrics.cluster import *
@@ -16,7 +17,7 @@ import pandas as pd
 
 from utils.parser import html2txt_parser_dir
 
-pd.set_option('display.max_colwidth', -1)
+pd.set_option("display.max_columns", 99)
 
 nlp = spacy.load('en')
 
@@ -180,6 +181,7 @@ def remove_expanded_stop_words(tokens):
     return [t for t in tokens if t not in expanded_stopwords]
 
 
+@lru_cache(maxsize=32)
 def translate_text(f_, method='textblob', target='en'):
     from textblob import TextBlob
 
@@ -198,11 +200,10 @@ def get_named_entities(text, languague='en'):
 
 
 def translate_deepl(s, target='EN'):
-    import deepl
+    import pydeepl
 
-    return '\n'.join([deepl.translate(ss, target=target)[0]
+    return '\n'.join([pydeepl.translate(ss, target)
                       for ss in s.split('.')])
-
 
 @register_case
 def case_1(f_):
