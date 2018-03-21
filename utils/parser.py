@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup as bs4
 
 def html2txt_parser(html_path, txt_path):
     with open(html_path, "rb") as in_, open(txt_path, 'a') as out:
-        bs = bs4(in_.read())
+        bs = bs4(in_.read(), 'lxml')
         [out.write(p.get_text()) for p in bs.find_all('p')]
 
 def html2txt_parser_dir(in_path, out_path=None):
