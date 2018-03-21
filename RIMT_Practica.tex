@@ -1,0 +1,1462 @@
+\documentclass[11pt]{article}
+\author{Carlos Correa García, Cesar González Fernández}
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics
+                         % to support a larger range
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+
+% portada
+\usepackage{titling}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+
+
+
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+
+
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+
+
+
+
+    % Pygments definitions
+
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+
+
+
+    \begin{document}
+
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1}
+ \pagestyle{fancy}
+ \fancyhead[LO,LE]{Recuperación de la Información y Minería de Texto}
+ \fancyhead[RO,RE]{\adjustimage{max size={0.5cm}{0.5cm}}{./header/DSLab_logo_2.png}}
+ \fancyfoot[LO,LE]{Máster en Data Science. URJC, 2018}
+ \cfoot{}
+ \fancyfoot[RE,RO]{Page\ \thepage\ of\ \protect\pageref{LastPage}}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\pretitle{
+  \begin{center}
+  \LARGE
+  \adjustimage{max size={5cm}{5cm}}{./header/logotipo_MDS.png}\\ 
+  \vspace{0.5cm}
+  \textbf{Máster en Data Science. URJC\\Recuperación de la Información y Minería de Texto}\\
+}
+\posttitle{\end{center}}
+
+\title{Análisis de noticias}
+
+\author{Carlos Correa García, Cesar González Fernández}
+\maketitle
+
+\newpage
+
+\renewcommand{\contentsname}{Índice}
+\tableofcontents
+
+\newpage
+
+\section{Introducción}
+
+A lo largo de esta práctica, vamos a modelizar y testear diferentes
+representaciones sobre diferentes noticias recogidas de algunos de los
+periódicos más influyentes de hoy en día. Esto es, analizaremos
+diferentes formas de representar un texto como un conjunto de términos
+que identifiquen a los documentos. De esta forma, al aplicar un
+algoritmo de clustering sobre esos conjuntos de términos, clasificaremos
+las noticias mediante la similitud entre términos y obtendremos un
+resultado de pertenencia a determinados clusters de los diferentes
+documentos.
+
+Una vez obtenida esa agrupación, mediremos la potencia de la solución
+mediante la diferencia coseno con el vector de clúster real, donde se
+representa a qué cluster deben pertenecer las noticias por su temática.
+
+Para ello, utilizaremos dos de las bibliotecas para Python más conocidas
+de NLP (Natural Language Processing):
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{NLTK}
+\item
+  \textbf{Spacy}
+\end{itemize}
+
+    Si desea más información de NLTK y Spacy, es posible visitar los
+siguientes enlaces: {[} NLTK: https://www.nltk.org/{]}{[}Spacy:
+https://spacy.io/{]}
+
+    Incluimos las bibliotecas y referencias que van a ser necesarias, entre
+las que destacan además de nltk y spacy, numpy y sklearn.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{k+kn}{from} \PY{n+nn}{time} \PY{k}{import} \PY{n}{time}
+        \PY{k+kn}{import} \PY{n+nn}{os}
+        \PY{k+kn}{import} \PY{n+nn}{pprint}
+        \PY{k+kn}{import} \PY{n+nn}{re}
+
+        \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{cluster} \PY{k}{import} \PY{n}{AgglomerativeClustering}
+        \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{metrics}\PY{n+nn}{.}\PY{n+nn}{cluster} \PY{k}{import} \PY{o}{*}
+        \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{metrics}\PY{n+nn}{.}\PY{n+nn}{cluster} \PY{k}{import} \PY{n}{adjusted\PYZus{}rand\PYZus{}score}
+        \PY{k+kn}{import} \PY{n+nn}{nltk}
+        \PY{k+kn}{import} \PY{n+nn}{numpy}
+        \PY{k+kn}{import} \PY{n+nn}{spacy}
+\end{Verbatim}
+
+
+    Así como algunas funciones programadas por nosotros y que se explicarán
+en el anexo.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{k+kn}{from} \PY{n+nn}{practica} \PY{k}{import} \PY{o}{*}
+        \PY{k+kn}{from} \PY{n+nn}{utils}\PY{n+nn}{.}\PY{n+nn}{parser} \PY{k}{import} \PY{n}{html2txt\PYZus{}parser\PYZus{}dir}
+\end{Verbatim}
+
+
+    Para comparar el vector resultado de nuestras pruebas con el resultado
+real esperado, creamos la variable REFERENCE con la información de
+clusters. Cada elemento de esta lista corresponde con el identificador
+de cluster al que pertenece. Si nos paramos a echar un vistazo a las
+noticias, veremos como efectivamente, las noticias 1, 3, 4, 5 y 20
+tratan sobre el mismo tema. De igual manera las noticias 2, 10, 11, 12,
+13, 14 y 22, y así sucesivamente.
+
+También se ha creado un vector de idiomas sim más razón de ser que la de
+poder imprimirlo junto con los resultados y poder ver la influencia de
+estos más claramente.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{n}{REFERENCE} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{]}
+        \PY{n}{LANG\PYZus{}REF} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{E}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{E}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{E}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{S}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{E}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{E}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{E}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{E}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{S}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{S}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{E}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{E}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{E}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{S}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{E}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{E}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{S}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{E}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{E}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{E}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{E}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{S}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\end{Verbatim}
+
+
+    Además, nos hará falta cargar una variable con las utilidades y
+diccionario de Spacy en el idioma inglés:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{n}{nlp} \PY{o}{=} \PY{n}{spacy}\PY{o}{.}\PY{n}{load}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{en}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+\section{Casos analizados y ejecutados}
+
+    Hemos analizado diferentes casos, aplicando sobre el texto diferentes
+transformaciones y analizando resultados, y así ir aplicando sobre el
+texto las métricas que mejor se comportan en reconocimiento de texto.
+Comenzamos con el más sencillo, como es simplemente tokenizar, y
+terminaremos con la obtención de entidades nombradas y nombres más
+comunes para obtener su frecuencia booleana.
+
+    \subsection{Tokenización}
+
+    En primer lugar vamos a empezar por lo más facil, el texto sin tratar.
+Únicamente necesitamos tokenizar el texto tal cual lo tenemos. Sobre
+estos tokens, la función de clusterización será capaz de calcular el
+cluster de cada texto.
+
+Al ser éste el primer caso y el más sencillo, podemos ver claramente en
+que consisten estás funciones, a los que llamamos casos, en los que
+hemos dividido el código para hacerlo más fácil de seguir. Los casos
+esperan recibir como parámetro un fichero, el cuál procesan haciendo uso
+de funciones externas (consiguiendo así reutilizar código entre
+diferentes casos) y devolveran una lista con los tokens del texto ya
+procesado.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{k}{def} \PY{n+nf}{word\PYZus{}tokenize}\PY{p}{(}\PY{n}{in\PYZus{}}\PY{p}{)}\PY{p}{:}
+            \PY{n}{s} \PY{o}{=} \PY{n}{in\PYZus{}} \PY{k}{if} \PY{n+nb}{isinstance}\PY{p}{(}\PY{n}{in\PYZus{}}\PY{p}{,} \PY{n+nb}{str}\PY{p}{)} \PY{k}{else} \PY{n}{in\PYZus{}}\PY{o}{.}\PY{n}{read}\PY{p}{(}\PY{p}{)}
+            \PY{k}{return} \PY{n}{nltk}\PY{o}{.}\PY{n}{word\PYZus{}tokenize}\PY{p}{(}\PY{n}{s}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{k}{def} \PY{n+nf}{case\PYZus{}1}\PY{p}{(}\PY{n}{f\PYZus{}}\PY{p}{)}\PY{p}{:}
+            \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{} Ninguna transformación. \PYZdq{}\PYZdq{}\PYZdq{}}
+
+            \PY{k}{return} \PY{n}{word\PYZus{}tokenize}\PY{p}{(}\PY{n}{f\PYZus{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Score: }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{evaluate}\PY{p}{(}\PY{n}{case\PYZus{}1}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Creando collecion de 18915 terminos
+Terminos unicos encontrados:  4706
+
+    \end{Verbatim}
+
+
+    \begin{verbatim}
+        0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19 20
+Idiomas  E  E  E  S  E  E  E  E  S  S  E  E  E  S  E  E  S  E  E  E  E
+Ref.     0  5  0  0  0  2  2  2  3  5  5  5  5  5  4  4  4  4  3  0  2
+Test     0  4  0  1  0  0  0  0  1  1  0  3  3  1  0  0  1  0  0  2  0
+    \end{verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Tiempo total de ejecución 1.22 segundos
+Score:  0.008040201005025135
+
+    \end{Verbatim}
+
+    Como vemos, con esta primera aproximación la puntuación obtenida es muy
+baja. Esto era de esperar ya que estamos usando todas las palabras del
+texto, las cuales incluyen las más comunes de ambos lenguajes (como
+determinantes y preposiciones) además de no traducir los textos a un
+lenguaje en común, lo que hace muy dificil que coincidan palabras de
+textos de idimas diferentes a pesar de tratar el mismo tema.
+
+    \subsection{Transformación de tokens a minúsculas}
+
+    Por lo que extraemos del ejemplo anterior, la tokenización es un método
+que, sin combinarlo con otros, es bastante malo, puesto que incluso si
+se obtiene la misma palabra en dos documentos pero difiere una letra
+minúscula de una mayúscula, el algoritmo de clusterización no va a
+encontrar similaridad entre ambas palabras, por lo que el ruido entre
+documentos es mayor.
+
+Es por eso por lo que "normalizamos" todos los tokens transformándolos a
+minúscula. De esta forma, obtendremos muy probablemente un número menor
+de palabras diferentes y por lo tanto, unos clústers un poco mejor
+definidos.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{k}{def} \PY{n+nf}{to\PYZus{}lower\PYZus{}case}\PY{p}{(}\PY{n}{tokens}\PY{p}{)}\PY{p}{:}
+            \PY{k}{return} \PY{p}{[}\PY{n}{t}\PY{o}{.}\PY{n}{lower}\PY{p}{(}\PY{p}{)} \PY{k}{for} \PY{n}{t} \PY{o+ow}{in} \PY{n}{tokens}\PY{p}{]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{k}{def} \PY{n+nf}{case\PYZus{}2}\PY{p}{(}\PY{n}{f\PYZus{}}\PY{p}{)}\PY{p}{:}
+            \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{} Convierte los tokens a minusculas. \PYZdq{}\PYZdq{}\PYZdq{}}
+
+            \PY{n}{tokens} \PY{o}{=} \PY{n}{word\PYZus{}tokenize}\PY{p}{(}\PY{n}{f\PYZus{}}\PY{p}{)}
+            \PY{k}{return} \PY{n}{to\PYZus{}lower\PYZus{}case}\PY{p}{(}\PY{n}{tokens}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Score: }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{evaluate}\PY{p}{(}\PY{n}{case\PYZus{}2}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Creando collecion de 18915 terminos
+Terminos unicos encontrados:  4469
+
+    \end{Verbatim}
+
+
+    \begin{verbatim}
+        0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19 20
+Idiomas  E  E  E  S  E  E  E  E  S  S  E  E  E  S  E  E  S  E  E  E  E
+Ref.     0  5  0  0  0  2  2  2  3  5  5  5  5  5  4  4  4  4  3  0  2
+Test     0  4  0  1  0  0  0  0  1  1  0  3  3  1  0  0  1  0  0  2  0
+    \end{verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Tiempo total de ejecución 1.33 segundos
+Score:  0.008040201005025135
+
+    \end{Verbatim}
+
+    Aún habiendo aplicado la transformación a minúsculas, vemos que el Score
+es muy bajo, por lo que debemos aplicar métricas para obtener
+similaridades entre documentos algo más complejas.
+
+    \subsection{Eliminación de signos de puntuación (aplicando el punto anterior)}
+
+    Los signos de puntuación no añaden significado al texto y son usados en
+todos, tanto en español como en inglés. Además, el número de
+repeticiones de estos caracteres es muy grande. Esto evidentemente
+provoca que otras palabras más significativas pierdan peso.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{k}{def} \PY{n+nf}{remove\PYZus{}puntuation}\PY{p}{(}\PY{n}{tokens}\PY{p}{)}\PY{p}{:}
+             \PY{k+kn}{import} \PY{n+nn}{string}
+
+             \PY{k}{return} \PY{p}{[}\PY{n}{t} \PY{k}{for} \PY{n}{t} \PY{o+ow}{in} \PY{n}{tokens} \PY{k}{if} \PY{n}{t} \PY{o+ow}{not} \PY{o+ow}{in} \PY{n}{string}\PY{o}{.}\PY{n}{punctuation}\PY{p}{]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{k}{def} \PY{n+nf}{case\PYZus{}3}\PY{p}{(}\PY{n}{f\PYZus{}}\PY{p}{)}\PY{p}{:}
+             \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{} Convierte a minusculas y elimina signos de puntuacion. \PYZdq{}\PYZdq{}\PYZdq{}}
+
+             \PY{n}{tokens} \PY{o}{=} \PY{n}{word\PYZus{}tokenize}\PY{p}{(}\PY{n}{f\PYZus{}}\PY{p}{)}
+             \PY{n}{tokens} \PY{o}{=} \PY{n}{to\PYZus{}lower\PYZus{}case}\PY{p}{(}\PY{n}{tokens}\PY{p}{)}
+             \PY{k}{return} \PY{n}{remove\PYZus{}puntuation}\PY{p}{(}\PY{n}{tokens}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Score: }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{evaluate}\PY{p}{(}\PY{n}{case\PYZus{}3}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Creando collecion de 17487 terminos
+Terminos unicos encontrados:  4451
+
+    \end{Verbatim}
+
+
+    \begin{verbatim}
+        0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19 20
+Idiomas  E  E  E  S  E  E  E  E  S  S  E  E  E  S  E  E  S  E  E  E  E
+Ref.     0  5  0  0  0  2  2  2  3  5  5  5  5  5  4  4  4  4  3  0  2
+Test     0  1  0  3  0  4  0  0  3  3  1  1  1  3  0  0  3  0  0  2  0
+    \end{verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Tiempo total de ejecución 1.23 segundos
+Score:  0.12794612794612795
+
+    \end{Verbatim}
+
+    Podemos ver que la puntuación tras eliminar los signos de puntuación ha
+aumentado, pero aún está lejos de ser un valor aceptable. Esta mejora es
+debida a el mayor peso que se da a otros tokens más significativos.
+
+    \subsection{Eliminación de stopwords en inglés y español (aplicando el punto anterior)}
+
+    Una vez eliminados los signos de puntuación, que no aportan ningún valor
+añadido a nuestro análisis de textos, nos puede venir a la mente la idea
+de eliminar más palabras de nuestros textos que no aportan ningún
+significado extra al documento y que además, se repiten constantemente
+en diferentes frases; son las que se denominan "stopwords". Dentro de
+este conjunto de palabras se encuentran las conjunciones, preposiciones,
+algunos verbos auxiliares, etc.
+
+Para ello, utilizaremos la lista de palabras que nos proporciona el
+corpus stopwords de la biblioteca \textbf{nltk}:
+
+    Estas son las stopwords que eliminaremos del inglés:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{n+nb}{print} \PY{p}{(}\PY{n}{nltk}\PY{o}{.}\PY{n}{corpus}\PY{o}{.}\PY{n}{stopwords}\PY{o}{.}\PY{n}{words}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{english}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+['i', 'me', 'my', 'myself', 'we', 'our', 'ours', 'ourselves', 'you', "you're", \\
+"you've", "you'll", "you'd", 'your', 'yours', 'yourself', 'yourselves', 'he', \\
+'him', 'his', 'himself', 'she', "she's", 'her', 'hers', 'herself', 'it', "it's", \\
+'its', 'itself', 'they', 'them', 'their', 'theirs', 'themselves', 'what', 'which', \\
+'who', 'whom', 'this', 'that', "that'll", 'these', 'those', 'am', 'is', 'are', 'was', \\
+'were', 'be', 'been', 'being', 'have', 'has', 'had', 'having', 'do', 'does', 'did', \\
+'doing', 'a', 'an', 'the', 'and', 'but', 'if', 'or', 'because', 'as', 'until', \\
+'while', 'of', 'at', 'by', 'for', 'with', 'about', 'against', 'between', 'into', \\
+'through', 'during', 'before', 'after', 'above', 'below', 'to', 'from', 'up', 'down', \\
+'in', 'out', 'on', 'off', 'over', 'under', 'again', 'further', 'then', 'once', 'here', \\
+'there', 'when', 'where', 'why', 'how', 'all', 'any', 'both', 'each', 'few', 'more', \\
+'most', 'other', 'some', 'such', 'no', 'nor', 'not', 'only', 'own', 'same', 'so', \\
+'than', 'too', 'very', 's', 't', 'can', 'will', 'just', 'don', "don't", 'should', \\
+"should've", 'now', 'd', 'll', 'm', 'o', 're', 've', 'y', 'ain', 'aren', "aren't", \\
+'couldn', "couldn't", 'didn', "didn't", 'doesn', "doesn't", 'hadn', "hadn't", 'hasn', \\
+"hasn't", 'haven', "haven't", 'isn', "isn't", 'ma', 'mightn', "mightn't", 'mustn', \\
+"mustn't", 'needn', "needn't", 'shan', "shan't", 'shouldn', "shouldn't", 'wasn', \\
+"wasn't", 'weren', "weren't", 'won', "won't", 'wouldn', "wouldn't"]
+
+    \end{Verbatim}
+
+    Y las del español:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}15}]:} \PY{n+nb}{print} \PY{p}{(}\PY{n}{nltk}\PY{o}{.}\PY{n}{corpus}\PY{o}{.}\PY{n}{stopwords}\PY{o}{.}\PY{n}{words}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{spanish}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+['de', 'la', 'que', 'el', 'en', 'y', 'a', 'los', 'del', 'se', 'las', 'por', 'un',  \\
+'para', 'con', 'no', 'una', 'su', 'al', 'lo', 'como', 'más', 'pero', 'sus', 'le', \\
+'ya', 'o', 'este', 'sí', 'porque', 'esta', 'entre', 'cuando', 'muy', 'sin', 'sobre', \\
+'también', 'me', 'hasta', 'hay', 'donde', 'quien', 'desde', 'todo', 'nos', 'durante', \\
+'todos', 'uno', 'les', 'ni', 'contra', 'otros', 'ese', 'eso', 'ante', 'ellos', 'e',\\
+ 'esto', 'mí', 'antes', 'algunos', 'qué', 'unos', 'yo', 'otro', 'otras', 'otra', 'él',\\
+ 'tanto', 'esa', 'estos', 'mucho', 'quienes', 'nada', 'muchos', 'cual', 'poco', 'ella', \\
+'estar', 'estas', 'algunas', 'algo', 'nosotros', 'mi', 'mis', 'tú', 'te', 'ti', 'tu', \\
+'tus', 'ellas', 'nosotras', 'vosostros', 'vosostras', 'os', 'mío', 'mía', 'míos', 'mías', \\
+'tuyo', 'tuya', 'tuyos', 'tuyas', 'suyo', 'suya', 'suyos', 'suyas', 'nuestro', 'nuestra', \\
+'nuestros', 'nuestras', 'vuestro', 'vuestra', 'vuestros', 'vuestras', 'esos', 'esas', \\
+'estoy', 'estás', 'está', 'estamos', 'estáis', 'están', 'esté', 'estés', 'estemos',\\
+ 'estéis', 'estén', 'estaré', 'estarás', 'estará', 'estaremos', 'estaréis', 'estarán', \\
+'estaría', 'estarías', 'estaríamos', 'estaríais', 'estarían', 'estaba', 'estabas', \\
+'estábamos', 'estabais', 'estaban', 'estuve', 'estuviste', 'estuvo', 'estuvimos', \\
+'estuvisteis', 'estuvieron', 'estuviera', 'estuvieras', 'estuviéramos', 'estuvierais', \\
+'estuvieran', 'estuviese', 'estuvieses', 'estuviésemos', 'estuvieseis', 'estuviesen', \\
+'estando', 'estado', 'estada', 'estados', 'estadas', 'estad', 'he', 'has', 'ha', 'hemos', \\
+'habéis', 'han', 'haya', 'hayas', 'hayamos', 'hayáis', 'hayan', 'habré', 'habrás', \\
+'habrá', 'habremos', 'habréis', 'habrán', 'habría', 'habrías', 'habríamos', 'habríais', \\
+'habrían', 'había', 'habías', 'habíamos', 'habíais', 'habían', 'hube', 'hubiste', 'hubo',\\
+ 'hubimos', 'hubisteis', 'hubieron', 'hubiera', 'hubieras', 'hubiéramos', 'hubierais',\\
+ 'hubieran', 'hubiese', 'hubieses', 'hubiésemos', 'hubieseis', 'hubiesen', 'habiendo', \\
+'habido', 'habida', 'habidos', 'habidas', 'soy', 'eres', 'es', 'somos', 'sois', 'son', \\
+'sea', 'seas', 'seamos', 'seáis', 'sean', 'seré', 'serás', 'será', 'seremos', 'seréis', \\
+'serán', 'sería', 'serías', 'seríamos', 'seríais', 'serían', 'era', 'eras', 'éramos', \\
+'erais', 'eran', 'fui', 'fuiste', 'fue', 'fuimos', 'fuisteis', 'fueron', 'fuera',\\
+ 'fueras', 'fuéramos', 'fuerais', 'fueran', 'fuese', 'fueses', 'fuésemos', 'fueseis',\\
+ 'fuesen', 'sintiendo', 'sentido', 'sentida', 'sentidos', 'sentidas', 'siente',\\
+ 'sentid', 'tengo', 'tienes', 'tiene', 'tenemos', 'tenéis', 'tienen', 'tenga', 'tengas',\\
+ 'tengamos', 'tengáis', 'tengan', 'tendré', 'tendrás', 'tendrá', 'tendremos', 'tendréis', \\
+'tendrán', 'tendría', 'tendrías', 'tendríamos', 'tendríais', 'tendrían', 'tenía', \\
+'tenías', 'teníamos', 'teníais', 'tenían', 'tuve', 'tuviste', 'tuvo', 'tuvimos', \\
+'tuvisteis', 'tuvieron', 'tuviera', 'tuvieras', 'tuviéramos', 'tuvierais', 'tuvieran', \\
+'tuviese', 'tuvieses', 'tuviésemos', 'tuvieseis', 'tuviesen', 'teniendo', 'tenido',\\
+ 'tenida', 'tenidos', 'tenidas', 'tened']
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{k}{def} \PY{n+nf}{remove\PYZus{}stop\PYZus{}words}\PY{p}{(}\PY{n}{tokens}\PY{p}{,} \PY{n}{langs} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{english}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{:}
+             \PY{k}{return} \PY{p}{[}\PY{n}{t} \PY{k}{for} \PY{n}{t} \PY{o+ow}{in} \PY{n}{tokens} \PY{k}{if} \PY{n}{t} \PY{o+ow}{not} \PY{o+ow}{in} \PY{n}{nltk}\PY{o}{.}\PY{n}{corpus}\PY{o}{.}\PY{n}{stopwords}\PY{o}{.}\PY{n}{words}\PY{p}{(}\PY{n}{langs}\PY{p}{)}\PY{p}{]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}15}]:} \PY{k}{def} \PY{n+nf}{case\PYZus{}4}\PY{p}{(}\PY{n}{f\PYZus{}}\PY{p}{)}\PY{p}{:}
+             \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{} Lo anterior y elimina las stopwords es español e ingles. \PYZdq{}\PYZdq{}\PYZdq{}}
+
+             \PY{n}{tokens} \PY{o}{=} \PY{n}{word\PYZus{}tokenize}\PY{p}{(}\PY{n}{f\PYZus{}}\PY{p}{)}
+             \PY{n}{tokens} \PY{o}{=} \PY{n}{to\PYZus{}lower\PYZus{}case}\PY{p}{(}\PY{n}{tokens}\PY{p}{)}
+             \PY{n}{tokens} \PY{o}{=} \PY{n}{remove\PYZus{}puntuation}\PY{p}{(}\PY{n}{tokens}\PY{p}{)}
+             \PY{k}{return} \PY{n}{remove\PYZus{}stop\PYZus{}words}\PY{p}{(}\PY{n}{tokens}\PY{p}{,} \PY{n}{langs}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{english}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{spanish}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}16}]:} \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Score: }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{evaluate}\PY{p}{(}\PY{n}{case\PYZus{}4}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Creando collecion de 10013 terminos
+Terminos unicos encontrados:  4221
+
+    \end{Verbatim}
+
+
+    \begin{verbatim}
+        0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19 20
+Idiomas  E  E  E  S  E  E  E  E  S  S  E  E  E  S  E  E  S  E  E  E  E
+Ref.     0  5  0  0  0  2  2  2  3  5  5  5  5  5  4  4  4  4  3  0  2
+Test     0  2  0  1  0  0  0  0  4  3  2  2  2  3  0  0  1  0  0  0  0
+    \end{verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Tiempo total de ejecución 6.43 segundos
+Score:  0.20920502092050208
+
+    \end{Verbatim}
+
+    Tras eliminar todas las stopwords, vemos que el Score obtenido es mayor
+a ninguna de las anteriores ejecuciones, por lo que mantendremos la
+tokenización y la eliminación de signos de puntuación y stopwords a lo
+largo de nuestro análisis de textos.
+
+    \subsection{Traducción con TextBlob (aplicando el punto anterior)}
+
+    Como hemos podido ver en los casos anteriores, los clusters siempre se
+han agrupado dando prioridad en primer lugar al idioma y después al
+tema. Esto es lógico, puesto que es complicado que entre dos textos en
+idiomas diferentes existan más terminos coincidentes que entre dos de
+idiomas diferentes. Estos términos se ven limitados a poco más que
+nombres propios, fechas o palabras que compartan ambos idiomas.
+
+Es por esto que el siguiente paso lógico es el traducir todos los textos
+al mismo idioma. Ya que la mayor parte de los textos están en inglés, y
+que los paquetes con los que trabajamos son más potentes cuando trabajan
+con este idioma, el sentido de la traducción que usaremos será de
+español a inglés:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}17}]:} \PY{k}{def} \PY{n+nf}{translate\PYZus{}text}\PY{p}{(}\PY{n}{f\PYZus{}}\PY{p}{,} \PY{n}{method}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{textblob}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{target}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{en}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{:}
+             \PY{k+kn}{from} \PY{n+nn}{textblob} \PY{k}{import} \PY{n}{TextBlob}
+
+             \PY{n}{s} \PY{o}{=} \PY{n}{f\PYZus{}}\PY{o}{.}\PY{n}{read}\PY{p}{(}\PY{p}{)}
+             \PY{n}{tb} \PY{o}{=} \PY{n}{TextBlob}\PY{p}{(}\PY{n}{s}\PY{p}{)}
+             \PY{k}{if} \PY{n}{TextBlob}\PY{p}{(}\PY{n}{s}\PY{p}{)}\PY{o}{.}\PY{n}{detect\PYZus{}language}\PY{p}{(}\PY{p}{)} \PY{o}{==} \PY{n}{target}\PY{p}{:}
+                 \PY{k}{return} \PY{n}{s}
+             \PY{k}{if} \PY{n}{method} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{textblob}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}
+                 \PY{k}{return} \PY{n+nb}{str}\PY{p}{(}\PY{n}{tb}\PY{o}{.}\PY{n}{translate}\PY{p}{(}\PY{n}{to}\PY{o}{=}\PY{n}{target}\PY{p}{)}\PY{p}{)}
+             \PY{k}{else}\PY{p}{:}
+                 \PY{k}{return} \PY{n}{translate\PYZus{}deepl}\PY{p}{(}\PY{n}{s}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}18}]:} \PY{k}{def} \PY{n+nf}{case\PYZus{}5}\PY{p}{(}\PY{n}{f\PYZus{}}\PY{p}{)}\PY{p}{:}
+             \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{} Traducido con TextBlob. \PYZdq{}\PYZdq{}\PYZdq{}}
+
+             \PY{n}{text} \PY{o}{=} \PY{n}{translate\PYZus{}text}\PY{p}{(}\PY{n}{f\PYZus{}}\PY{p}{)}
+             \PY{n}{tokens} \PY{o}{=} \PY{n}{word\PYZus{}tokenize}\PY{p}{(}\PY{n}{text}\PY{p}{)}
+             \PY{n}{tokens} \PY{o}{=} \PY{n}{to\PYZus{}lower\PYZus{}case}\PY{p}{(}\PY{n}{tokens}\PY{p}{)}
+             \PY{n}{tokens} \PY{o}{=} \PY{n}{remove\PYZus{}puntuation}\PY{p}{(}\PY{n}{tokens}\PY{p}{)}
+             \PY{k}{return} \PY{n}{remove\PYZus{}stop\PYZus{}words}\PY{p}{(}\PY{n}{tokens}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}19}]:} \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Score: }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{evaluate}\PY{p}{(}\PY{n}{case\PYZus{}5}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Creando collecion de 10044 terminos
+Terminos unicos encontrados:  3655
+
+    \end{Verbatim}
+
+
+    \begin{verbatim}
+        0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19 20
+Idiomas  E  E  E  S  E  E  E  E  S  S  E  E  E  S  E  E  S  E  E  E  E
+Ref.     0  5  0  0  0  2  2  2  3  5  5  5  5  5  4  4  4  4  3  0  2
+Test     0  3  0  0  0  0  0  0  2  3  3  3  3  4  1  1  4  1  0  1  0
+    \end{verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Tiempo total de ejecución 8.25 segundos
+Score:  0.47437425506555425
+
+    \end{Verbatim}
+
+    Como vemos, la mejora es más que evidente. Además, textos como el 9 y el
+11 han sido asignados al mismo cluster a pesar de tener idimas
+diferentes. Podemos probar que ocurriría si el idioma al que
+transformamos los textos fuera al español para comprobar si, escoger
+inglés como idioma con el que trabajar, ha sido buena idea.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}20}]:} \PY{k}{def} \PY{n+nf}{case\PYZus{}51}\PY{p}{(}\PY{n}{f\PYZus{}}\PY{p}{)}\PY{p}{:}
+             \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{} Traducido con TextBlob (a español). \PYZdq{}\PYZdq{}\PYZdq{}}
+
+             \PY{n}{text} \PY{o}{=} \PY{n}{translate\PYZus{}text}\PY{p}{(}\PY{n}{f\PYZus{}}\PY{p}{,} \PY{n}{target}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{es}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{tokens} \PY{o}{=} \PY{n}{word\PYZus{}tokenize}\PY{p}{(}\PY{n}{text}\PY{p}{)}
+             \PY{n}{tokens} \PY{o}{=} \PY{n}{to\PYZus{}lower\PYZus{}case}\PY{p}{(}\PY{n}{tokens}\PY{p}{)}
+             \PY{n}{tokens} \PY{o}{=} \PY{n}{remove\PYZus{}puntuation}\PY{p}{(}\PY{n}{tokens}\PY{p}{)}
+             \PY{k}{return} \PY{n}{remove\PYZus{}stop\PYZus{}words}\PY{p}{(}\PY{n}{tokens}\PY{p}{,} \PY{n}{langs}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{spanish}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}21}]:} \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Score: }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{evaluate}\PY{p}{(}\PY{n}{case\PYZus{}51}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Creando collecion de 10115 terminos
+Terminos unicos encontrados:  3950
+
+    \end{Verbatim}
+
+
+    \begin{verbatim}
+        0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19 20
+Idiomas  E  E  E  S  E  E  E  E  S  S  E  E  E  S  E  E  S  E  E  E  E
+Ref.     0  5  0  0  0  2  2  2  3  5  5  5  5  5  4  4  4  4  3  0  2
+Test     0  2  0  0  0  0  0  0  3  2  2  2  2  1  0  0  1  0  0  4  0
+    \end{verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Tiempo total de ejecución 7.17 segundos
+Score:  0.3035175879396985
+
+    \end{Verbatim}
+
+    Como vemos, la diferencia de puntuación es grande, por lo que estabamos
+en lo cierto al pensar que traducir los textos al inglés era la mejor
+opción.
+
+    \subsection{Traducción con deepl (aplicando el punto 2.4)}
+
+    Al igual que en el caso anterior, vamos a utilizar en este caso la
+bibiolteca \textbf{deepl} y analizar si obtenemos unos clusters más
+definidos en función de los términos obtenidos mediante traducción a
+inglés con deepl.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}22}]:} \PY{k}{def} \PY{n+nf}{translate\PYZus{}deepl}\PY{p}{(}\PY{n}{s}\PY{p}{,} \PY{n}{target}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{EN}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{:}
+             \PY{k+kn}{import} \PY{n+nn}{pydeepl}
+
+             \PY{k}{return} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{join}\PY{p}{(}\PY{p}{[}\PY{n}{pydeepl}\PY{o}{.}\PY{n}{translate}\PY{p}{(}\PY{n}{ss}\PY{p}{,} \PY{n}{target}\PY{p}{)}
+                               \PY{k}{for} \PY{n}{ss} \PY{o+ow}{in} \PY{n}{s}\PY{o}{.}\PY{n}{split}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{.}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}23}]:} \PY{k}{def} \PY{n+nf}{case\PYZus{}6}\PY{p}{(}\PY{n}{f\PYZus{}}\PY{p}{)}\PY{p}{:}
+             \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{} Traducido con deepl. \PYZdq{}\PYZdq{}\PYZdq{}}
+
+             \PY{n}{text} \PY{o}{=} \PY{n}{translate\PYZus{}text}\PY{p}{(}\PY{n}{f\PYZus{}}\PY{p}{,} \PY{n}{method}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{deepl}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{tokens} \PY{o}{=} \PY{n}{word\PYZus{}tokenize}\PY{p}{(}\PY{n}{text}\PY{p}{)}
+             \PY{n}{tokens} \PY{o}{=} \PY{n}{to\PYZus{}lower\PYZus{}case}\PY{p}{(}\PY{n}{tokens}\PY{p}{)}
+             \PY{n}{tokens} \PY{o}{=} \PY{n}{remove\PYZus{}puntuation}\PY{p}{(}\PY{n}{tokens}\PY{p}{)}
+             \PY{k}{return} \PY{n}{remove\PYZus{}stop\PYZus{}words}\PY{p}{(}\PY{n}{tokens}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}25}]:} \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Score: }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{evaluate}\PY{p}{(}\PY{n}{case\PYZus{}6}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Creando collecion de 10036 terminos
+Terminos unicos encontrados:  3630
+
+    \end{Verbatim}
+
+
+    \begin{verbatim}
+        0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19 20
+Idiomas  E  E  E  S  E  E  E  E  S  S  E  E  E  S  E  E  S  E  E  E  E
+Ref.     0  5  0  0  0  2  2  2  3  5  5  5  5  5  4  4  4  4  3  0  2
+Test     0  1  0  0  0  0  0  0  3  1  1  1  1  1  2  2  2  2  0  4  0
+    \end{verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Tiempo total de ejecución 2.32 minutos
+Score:  0.6506024096385542
+
+    \end{Verbatim}
+
+    Con la única diferencia de la utilización de una biblioteca u otra de
+traducción, vemos que se obtiene un Score igual en el caso de utilizar
+deepl.
+
+Vamos a utilizar TextBlob para traducir en los siguientes puntos por 2
+razones:
+
+\begin{itemize}
+\item En pruebas anteriores, obtuvimos un Score menor con deepl frente al Score de TextBlob. Eso nos hace pensar que la traducción online realizada por deepl ha sido mejorada desde entonces, pero en el mejor de los casos, obtenemos el mismo resultado que con TextBlob, por lo que descartaremos deepl.
+\item La traducción con TextBlob es mucho más liviana y su tiempo de ejecución es considerablemente menor.
+\end{itemize}
+
+    \subsection{Eliminación de stopwords ampliadas}
+
+    Las stopwords utilizadas en los casos anterior son términos definidos
+por las librerias y se basan en el estudio de los idiomas para poder ser
+usadas en todos los casos. Estas stopwords son útiles para nuestro
+corpus de documentos, pero podemos hacer una aproximación mas específica
+para nuestros datos. Ya que el objetivo de las stopwords es identificar
+aquellas palabras más comunes y que por tanto, dejan de ser útiles a la
+hora de clasificar, vamos a extraer de nuestros documentos aquellos
+términos que aparecen con más frecuencia.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}45}]:} \PY{k}{def} \PY{n+nf}{remove\PYZus{}expanded\PYZus{}stop\PYZus{}words}\PY{p}{(}\PY{n}{tokens}\PY{p}{)}\PY{p}{:}
+             \PY{n}{expanded\PYZus{}stopwords} \PY{o}{=}  \PY{n}{nltk}\PY{o}{.}\PY{n}{corpus}\PY{o}{.}\PY{n}{stopwords}\PY{o}{.}\PY{n}{words}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{english}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{o}{+} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{the}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                     \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{say}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}PRON\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{people}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{year}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{take}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{international}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                     \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{state}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{new}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{try}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{report}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{leader}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{government}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tell}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                     \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{minister}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{leave}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{support}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{region}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{work}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{want}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{call}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                     \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{continue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{in}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{time}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{week}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{member}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{need}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{policy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                     \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{news}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{country}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{later}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{receive}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{force}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{face}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{public}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                     \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sign}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+             \PY{k}{return} \PY{p}{[}\PY{n}{t} \PY{k}{for} \PY{n}{t} \PY{o+ow}{in} \PY{n}{tokens} \PY{k}{if} \PY{n}{t} \PY{o+ow}{not} \PY{o+ow}{in} \PY{n}{expanded\PYZus{}stopwords}\PY{p}{]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}28}]:} \PY{k}{def} \PY{n+nf}{case\PYZus{}7}\PY{p}{(}\PY{n}{f\PYZus{}}\PY{p}{)}\PY{p}{:}
+             \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{} Stopwords ampliadas para el corpus. \PYZdq{}\PYZdq{}\PYZdq{}}
+
+             \PY{n}{text} \PY{o}{=} \PY{n}{translate\PYZus{}text}\PY{p}{(}\PY{n}{f\PYZus{}}\PY{p}{)}
+             \PY{n}{tokens} \PY{o}{=} \PY{n}{word\PYZus{}tokenize}\PY{p}{(}\PY{n}{text}\PY{p}{)}
+             \PY{n}{tokens} \PY{o}{=} \PY{n}{to\PYZus{}lower\PYZus{}case}\PY{p}{(}\PY{n}{tokens}\PY{p}{)}
+             \PY{n}{tokens} \PY{o}{=} \PY{n}{remove\PYZus{}puntuation}\PY{p}{(}\PY{n}{tokens}\PY{p}{)}
+             \PY{k}{return} \PY{n}{remove\PYZus{}expanded\PYZus{}stop\PYZus{}words}\PY{p}{(}\PY{n}{tokens}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}26}]:} \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Score: }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{evaluate}\PY{p}{(}\PY{n}{case\PYZus{}7}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Creando collecion de 9571 terminos
+Terminos unicos encontrados:  3622
+
+    \end{Verbatim}
+
+
+    \begin{verbatim}
+        0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19 20
+Idiomas  E  E  E  S  E  E  E  E  S  S  E  E  E  S  E  E  S  E  E  E  E
+Ref.     0  5  0  0  0  2  2  2  3  5  5  5  5  5  4  4  4  4  3  0  2
+Test     4  1  4  4  2  2  2  2  0  1  1  1  1  1  0  0  0  0  2  3  2
+    \end{verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Tiempo total de ejecución 2.99 segundos
+Score:  0.7174887892376681
+
+    \end{Verbatim}
+
+    Esta aproximación nos permite mejorar la calidad de los clusters
+obtenidos.
+
+    \subsection{Utilización de entidades nombradas}
+
+    Es natural pensar que existan ciertas palabras singulares en el texto
+con una importancia muy alta. Por ello, la identificación de entidades
+nombradas es un método común en procesamiento de texto. Ese método
+reconoce personas relevantes en el texto, organizaciones, lugares,
+expresiones de tiempo, cantidades, etc.
+
+Por ello, vamos a hacer uso de la biblioteca \textbf{spacy} y su
+reconocimiento de entidades nombradas, mediante el atributo "ents".
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}30}]:} \PY{k}{def} \PY{n+nf}{get\PYZus{}named\PYZus{}entities}\PY{p}{(}\PY{n}{text}\PY{p}{,} \PY{n}{languague}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{en}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{:}
+             \PY{k+kn}{import} \PY{n+nn}{spacy}
+
+             \PY{n}{nlp} \PY{o}{=} \PY{n}{spacy}\PY{o}{.}\PY{n}{load}\PY{p}{(}\PY{n}{languague}\PY{p}{)}
+             \PY{k}{return} \PY{n}{nlp}\PY{p}{(}\PY{n}{text}\PY{p}{)}\PY{o}{.}\PY{n}{ents}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}31}]:} \PY{k}{def} \PY{n+nf}{case\PYZus{}8}\PY{p}{(}\PY{n}{f\PYZus{}}\PY{p}{)}\PY{p}{:}
+             \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{} Con entidades nombradas. \PYZdq{}\PYZdq{}\PYZdq{}}
+
+             \PY{n}{text} \PY{o}{=} \PY{n}{translate\PYZus{}text}\PY{p}{(}\PY{n}{f\PYZus{}}\PY{p}{)}
+             \PY{k}{return} \PY{p}{[}\PY{n+nb}{str}\PY{p}{(}\PY{n}{w}\PY{p}{)} \PY{k}{for} \PY{n}{w} \PY{o+ow}{in} \PY{n}{get\PYZus{}named\PYZus{}entities}\PY{p}{(}\PY{n}{text}\PY{p}{)}\PY{p}{]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}32}]:} \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Score: }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{evaluate}\PY{p}{(}\PY{n}{case\PYZus{}8}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Creando collecion de 1648 terminos
+Terminos unicos encontrados:  750
+
+    \end{Verbatim}
+
+
+    \begin{verbatim}
+        0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19 20
+Idiomas  E  E  E  S  E  E  E  E  S  S  E  E  E  S  E  E  S  E  E  E  E
+Ref.     0  5  0  0  0  2  2  2  3  5  5  5  5  5  4  4  4  4  3  0  2
+Test     4  3  4  4  1  0  0  0  1  3  3  3  3  3  2  2  2  2  1  0  0
+    \end{verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Tiempo total de ejecución 15.75 segundos
+Score:  0.815913688469319
+
+    \end{Verbatim}
+
+    En este caso, el Score sube hasta 0.816, reduciendo a 4 las noticias
+erróneamente clasificadas.
+
+    \subsection{Utilización de entidades nombradas preseleccionadas}
+
+    En el caso anterior haciamos uso de todas las entidades nombradas, pero
+no todas representan lo mismo. Unas se refieren a personas, otras a
+lugares, otras a fechas, ... y podemos considerar que unas nos ofrecen
+más información que otras. Teniendo esto en mente, y dado que nuestro
+corpus está basado en noticias, hemos decidido utilizar solo aquellas
+entidades que representan lugares (GPE), personas (PERSON),
+nacionalidades/religiones/grupos políticos (NORP) y
+compañías/organizaciones/instituciones (ORG).
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}27}]:} \PY{k}{def} \PY{n+nf}{case\PYZus{}9}\PY{p}{(}\PY{n}{f\PYZus{}}\PY{p}{)}\PY{p}{:}
+             \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{} Con entidades nombradas filtradas \PYZdq{}\PYZdq{}\PYZdq{}}
+
+             \PY{n}{text} \PY{o}{=} \PY{n}{translate\PYZus{}text}\PY{p}{(}\PY{n}{f\PYZus{}}\PY{p}{)}
+             \PY{k}{return} \PY{p}{[}\PY{n+nb}{str}\PY{p}{(}\PY{n}{w}\PY{p}{)} \PY{k}{for} \PY{n}{w} \PY{o+ow}{in} \PY{n}{get\PYZus{}named\PYZus{}entities}\PY{p}{(}\PY{n}{text}\PY{p}{)} \PY{k}{if} \PY{n}{w}\PY{o}{.}\PY{n}{label\PYZus{}} \PYZbs{}
+                     \PY{o+ow}{in} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{GPE}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PERSON}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{NORP}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ORG}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}28}]:} \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Score: }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{evaluate}\PY{p}{(}\PY{n}{case\PYZus{}9}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Creando collecion de 1104 terminos
+Terminos unicos encontrados:  465
+
+    \end{Verbatim}
+
+
+    \begin{verbatim}
+        0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19 20
+Idiomas  E  E  E  S  E  E  E  E  S  S  E  E  E  S  E  E  S  E  E  E  E
+Ref.     0  5  0  0  0  2  2  2  3  5  5  5  5  5  4  4  4  4  3  0  2
+Test     0  1  0  0  0  3  3  3  4  1  1  1  1  1  2  2  2  2  0  0  3
+    \end{verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Tiempo total de ejecución 9.28 segundos
+Score:  0.9186046511627907
+
+    \end{Verbatim}
+
+    El resultado obtenido se aproxima mucho a la realidad. Vemos como solo
+una noticia se encuentra mal clusterizada y se debe a que habla sobre
+personas y organizaciones tratados también en otros temas. Una situación
+que podríamos considerar bastante extrema, aunque podemos afinar más.
+
+    \subsection{Utilización de entidades nombradas preseleccionadas y 5 tokens más comunes por texto, aplicando lematización}
+
+    Si analizamos cualquier texto o noticia, podemos ver que además de
+ciertas entidades nombradas interesantes, hay otras palabras comunes que
+son de mucho interés y aportan gran cantidad de información. Por
+ejemplo, en noticias sobre el escándalo de Oxfam, podría interesarnos
+sustantivos (nombres comunes) como "abuso", "sexo" o "verguenza". Esas
+palabras tienen un peso muy alto en la noticia y que conjuntamente con
+las entidades nombradas, nos pueden ofrecer un conjunto de términos
+mucho más completo.
+
+Por ello, vamos a contar el número de sustantivos que aparecen en el
+texto y a quedarnos con los 5 más significativos.
+
+Para eliminar posibles palabras que no aporten significado específico de
+ciertas noticias sino que se repitan constantemente, vamos a eliminar
+las palabras que se repitan al menos en la mitad de las noticias. Para
+obtener la repetición de dichas palabras, hemos desarrollado y hecho uso
+del fichero fuente \textbf{rep\_words\_analyzer.py}, que obtiene los
+lemas de todas las palabras y los agrupa por número de apariciones en
+diferentes textos. Hemos incluido dichos lemas en la variable
+expanded\_stopwords.
+
+Por último, aplizamos lematización sobre todas las palabras de todos los
+textos (proceso para extraer el lema de cada palabra).
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}31}]:} \PY{k}{def} \PY{n+nf}{lemmatizer}\PY{p}{(}\PY{n}{text}\PY{p}{,} \PY{n}{expanded\PYZus{}stopwords}\PY{o}{=}\PY{p}{[}\PY{p}{]}\PY{p}{,} \PY{n}{pos}\PY{o}{=}\PY{p}{[}\PY{p}{]}\PY{p}{)}\PY{p}{:}
+             \PY{k}{return} \PY{p}{[}\PY{n}{w}\PY{o}{.}\PY{n}{lemma\PYZus{}} \PY{k}{for} \PY{n}{w} \PY{o+ow}{in} \PY{n}{nlp}\PY{p}{(}\PY{n}{text}\PY{p}{)} \PY{k}{if} \PY{p}{(}\PY{o+ow}{not} \PY{p}{(}\PY{n}{w}\PY{o}{.}\PY{n}{is\PYZus{}stop} \PY{o+ow}{or} \PY{n+nb}{str}\PY{p}{(}\PY{n}{w}\PY{p}{)} \PY{o+ow}{in} \PYZbs{}
+                         \PY{n}{expanded\PYZus{}stopwords} \PY{o+ow}{or} \PY{n}{w}\PY{o}{.}\PY{n}{is\PYZus{}punct}\PY{p}{)}\PY{p}{)} \PY{o+ow}{and} \PYZbs{}
+                         \PY{p}{(}\PY{n}{w}\PY{o}{.}\PY{n}{pos\PYZus{}} \PY{o+ow}{in} \PY{n}{pos}\PY{p}{)}\PY{p}{]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}32}]:} \PY{k}{def} \PY{n+nf}{case\PYZus{}10}\PY{p}{(}\PY{n}{f\PYZus{}}\PY{p}{)}\PY{p}{:}
+             \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{} Con entidades nombradas filtradas y mas comunes. \PYZdq{}\PYZdq{}\PYZdq{}}
+             \PY{k+kn}{from} \PY{n+nn}{collections} \PY{k}{import} \PY{n}{Counter}
+
+             \PY{n}{expanded\PYZus{}stopwords} \PY{o}{=}  \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{the}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                     \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{say}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}PRON\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{people}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{year}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{take}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{international}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                     \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{state}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{new}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{try}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{report}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{leader}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{government}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tell}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                     \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{minister}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{leave}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{support}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{region}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{work}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{want}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{call}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                     \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{continue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{in}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{time}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{week}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{member}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{need}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{policy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                     \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{news}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{country}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{later}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{receive}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{force}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{face}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{public}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                     \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sign}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+
+
+             \PY{n}{text} \PY{o}{=} \PY{n}{translate\PYZus{}text}\PY{p}{(}\PY{n}{f\PYZus{}}\PY{p}{)}
+             \PY{n}{tokens} \PY{o}{=} \PY{n}{lemmatizer}\PY{p}{(}\PY{n}{text}\PY{p}{,} \PY{n}{expanded\PYZus{}stopwords}\PY{o}{=}\PY{n}{expanded\PYZus{}stopwords}\PY{p}{,}
+                                 \PY{n}{pos}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{NOUN}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+             \PY{n}{most\PYZus{}common\PYZus{}nouns} \PY{o}{=} \PY{p}{[}\PY{n}{c}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{k}{for} \PY{n}{c} \PY{o+ow}{in} \PY{n}{Counter}\PY{p}{(}\PY{n}{tokens}\PY{p}{)}\PY{o}{.}\PY{n}{most\PYZus{}common}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{]}
+             \PY{k}{return} \PY{n}{to\PYZus{}lower\PYZus{}case}\PY{p}{(}\PY{p}{[}\PY{n+nb}{str}\PY{p}{(}\PY{n}{w}\PY{p}{)} \PY{k}{for} \PY{n}{w} \PY{o+ow}{in} \PY{n}{get\PYZus{}named\PYZus{}entities}\PY{p}{(}\PY{n}{text}\PY{p}{)} \PYZbs{}
+                     \PY{k}{if} \PY{n}{w}\PY{o}{.}\PY{n}{label\PYZus{}} \PY{o+ow}{in} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{GPE}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PERSON}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{NORP}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ORG}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DATE}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]} \PY{o}{+} \PYZbs{}
+                     \PY{n}{most\PYZus{}common\PYZus{}nouns}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}33}]:} \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Score: }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{evaluate}\PY{p}{(}\PY{n}{case\PYZus{}10}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Creando collecion de 1452 terminos
+Terminos unicos encontrados:  664
+
+    \end{Verbatim}
+
+
+    \begin{verbatim}
+        0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19 20
+Idiomas  E  E  E  S  E  E  E  E  S  S  E  E  E  S  E  E  S  E  E  E  E
+Ref.     0  5  0  0  0  2  2  2  3  5  5  5  5  5  4  4  4  4  3  0  2
+Test     0  1  0  0  0  3  3  3  4  1  1  1  1  1  2  2  2  2  0  0  3
+    \end{verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Tiempo total de ejecución 15.95 segundos
+Score:  0.9186046511627907
+
+    \end{Verbatim}
+
+    Observamos en los resultados de la ejecución que el Score sigue siendo
+el mismo y sigue existiendo el error en la clusterización que aún
+teníamos en el caso anterior. Parece que el número de entidades
+nombradas es muy superior a los 5 sustantivos más comunes de texto.
+
+    \subsection{Utilización de entidades nombradas preseleccionadas y 5 tokens más comunes por texto mediante frecuencia booleana, aplicando lematización}
+
+    Puesto que el caso anterior, aunque el Score sea el mismo y el error en
+la clusterización siga vigente, la información que se aporta de cada
+noticia es claramente mayor que sin tener en cuenta los nombres más
+repetidos en el texto. El problema es que las entidades nombradas pueden
+estar siendo repetidas mientras que los 5 tokens NOUN únicamente
+aparecen 1 vez cada uno, por lo que se le restan apariciones en el texto
+y se está dando automáticamente más peso a las entidades nombradas.
+
+Por ello, vamos a ejecutar el mismo algoritmo que el caso anterior con
+la única diferencia que se va a devolver una lista de términos sin
+repetición.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}35}]:} \PY{k}{def} \PY{n+nf}{case\PYZus{}11}\PY{p}{(}\PY{n}{f\PYZus{}}\PY{p}{)}\PY{p}{:}
+             \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{} Con entidades nombradas filtradas y mas comunes eliminando duplicados. \PYZdq{}\PYZdq{}\PYZdq{}}
+
+             \PY{c+c1}{\PYZsh{}Devolvemos}
+             \PY{k}{return} \PY{n+nb}{set}\PY{p}{(}\PY{n}{case\PYZus{}10}\PY{p}{(}\PY{n}{f\PYZus{}}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}36}]:} \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Score: }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{evaluate}\PY{p}{(}\PY{n}{case\PYZus{}11}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Creando collecion de 974 terminos
+Terminos unicos encontrados:  664
+
+    \end{Verbatim}
+
+
+    \begin{verbatim}
+        0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19 20
+Idiomas  E  E  E  S  E  E  E  E  S  S  E  E  E  S  E  E  S  E  E  E  E
+Ref.     0  5  0  0  0  2  2  2  3  5  5  5  5  5  4  4  4  4  3  0  2
+Test     0  4  0  0  0  3  3  3  1  4  4  4  4  4  2  2  2  2  1  0  3
+    \end{verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Tiempo total de ejecución 15.89 segundos
+Score:  1.0
+
+    \end{Verbatim}
+
+    \subsection{TF-idf}
+
+    Por último podemos probar a ejecutar estos mismos casos pero usando en
+vez de TF como médida, TF-idf. A diferecia de solo tener en cuenta la
+frecuencia de la palabra en el texto en cuestion, la métrica que nos da
+TF-idf también tiene en cuenta lo "particular" que es cierta palabra en
+el conjunto total de los textos. Por tanto, si la palabra no es común en
+todo el corpus, pero si lo es en cierto subconjunto de textos, esta
+puede ser una gran evidencia de la relación entre los textos de estos
+subconjuntos.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{df\PYZus{}tf\PYZus{}idf} \PY{o}{=} \PY{n}{evaluate\PYZus{}all}\PY{p}{(}\PY{n}{measure}\PY{o}{=}\PY{n}{TF\PYZus{}idf}\PY{p}{)}
+        \PY{n}{display}\PY{p}{(}\PY{n}{df\PYZus{}tf\PYZus{}idf}\PY{p}{)}
+\end{Verbatim}
+
+
+    Vemos como esta métrica, al favorecer a aquellos terminos poco comunes,
+muestra menos diferencia entre los procesamientos sencillos y los más
+complejos. Es curioso ver como en este caso resulta más favorable
+realizar una tradución al español que al inglés (0.69.. vs 0.65..).
+
+También hay que destacar el tiempo de ejecución de esta metrica, que al
+ser más compleja computacionalmente tarda más en realizar los calculos y
+consume mas recursos de la máquina.
+
+\section{Conclusiones}
+
+    A continuación podemos ver una tabla con las puntuaciones obtenidas en
+los diferentes casos analizados.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{df\PYZus{}tf} \PY{o}{=} \PY{n}{evaluate\PYZus{}all}\PY{p}{(}\PY{p}{)}
+
+        \PY{n}{display}\PY{p}{(}\PY{n}{df\PYZus{}tf}\PY{p}{)}
+\end{Verbatim}
+
+
+    Resulta más que evidente como en función realizamos un tratamiento más
+profundo complejo del texto, mejor es el resultado obtenido. Así
+también, podemos asegurar que la clave para obtener un buen resultado,
+es intentar obetener solo aquellos terminos más significativos para cada
+cluster en concreto, pero a la vez, menos comunes al total de los
+documentos analizados. Esto puede ser complicado, sobre todo si se dan
+casos como el que nos encontramos con la noticia "Reaction to remarks by
+Angela Merkel and Emmanuel Macron ..." donde debido a la aparición de
+elementos comunes como Ángela Merkel con otras noticias, fue dificil dar
+con un método que fuera capaz de realizar una clasificación perfecta
+para el corpus con el que trabajamos.
+
+    También hemos podido hacer una comparación entre hacer uso de la métrica
+TF y la métrica TF\_idf. En la siguiente gráfica se puede apreciar la
+diferencia entre ellos.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}48}]:} \PY{n}{aux} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{concat}\PY{p}{(}\PY{p}{[}\PY{n}{df\PYZus{}tf}\PY{p}{,} \PY{n}{df\PYZus{}tf\PYZus{}idf}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+         \PY{n}{aux}\PY{o}{.}\PY{n}{columns} \PY{o}{=} \PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TF}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TF\PYZus{}idf}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{aux}\PY{o}{.}\PY{n}{sort\PYZus{}values}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TF}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TF\PYZus{}idf}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{ascending}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{kind}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{barh}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}48}]:} <matplotlib.axes.\_subplots.AxesSubplot at 0x7fe4053e23c8>
+\end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_92_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+
+    Vemos como TF\_idf resulta una métrica más robusta para la mayoría de
+los casos, dando un resultado digamos aceptable incluso sin aplicar
+ningún tipo de procesamiento al texto. Según vamos realizando
+procesamientos más complejos, la diferencias se van reduciendo, algo
+lógico si tenemos en cuenta que lo que pretendemos con estos
+procesamientos es seleccionar aquellos terminos más significativos, algo
+que ya intenta hacer TF\_idf por si misma, por lo que resulta evidente
+que ambas métricas acaben convergiendo.
+
+Cabe destacar que el uso de esta métrica requiere de unos recursos
+computacionales mayores a los que requiere TF.
+
+    \section{Anexo}
+
+     \subsection{Funciones auxiliares}
+
+    Vamos a definir los métodos que vamos a utilizar para clusterizar los
+documentos. Hemos usado el código proporcionado en la práctica
+modificandolos un poco para así adaptarlo a la estrucura que queremos
+implementar en nuestro código, pero manteniendo la base.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}46}]:} \PY{k}{def} \PY{n+nf}{TF}\PY{p}{(}\PY{n}{document}\PY{p}{,} \PY{n}{unique\PYZus{}terms}\PY{p}{,} \PY{n}{collection}\PY{p}{)}\PY{p}{:}
+             \PY{n}{word\PYZus{}tf} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{k}{for} \PY{n}{word} \PY{o+ow}{in} \PY{n}{unique\PYZus{}terms}\PY{p}{:}
+                 \PY{n}{word\PYZus{}tf}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{collection}\PY{o}{.}\PY{n}{tf}\PY{p}{(}\PY{n}{word}\PY{p}{,} \PY{n}{document}\PY{p}{)}\PY{p}{)}
+             \PY{k}{return} \PY{n}{word\PYZus{}tf}
+
+
+         \PY{k}{def} \PY{n+nf}{TF\PYZus{}idf}\PY{p}{(}\PY{n}{document}\PY{p}{,} \PY{n}{unique\PYZus{}terms}\PY{p}{,} \PY{n}{collection}\PY{p}{)}\PY{p}{:}
+             \PY{n}{word\PYZus{}tf\PYZus{}idf} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{k}{for} \PY{n}{word} \PY{o+ow}{in} \PY{n}{unique\PYZus{}terms}\PY{p}{:}
+                 \PY{n}{word\PYZus{}tf\PYZus{}idf}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{collection}\PY{o}{.}\PY{n}{tf\PYZus{}idf}\PY{p}{(}\PY{n}{word}\PY{p}{,} \PY{n}{document}\PY{p}{)}\PY{p}{)}
+             \PY{k}{return} \PY{n}{word\PYZus{}tf\PYZus{}idf}
+
+
+         \PY{k}{def} \PY{n+nf}{cluster\PYZus{}texts}\PY{p}{(}\PY{n}{texts}\PY{p}{,} \PY{n}{cluster\PYZus{}number}\PY{p}{,} \PY{n}{distance}\PY{p}{,} \PY{n}{verbose}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{measure}\PY{o}{=}\PY{n}{TF}\PY{p}{)}\PY{p}{:}
+             \PY{c+c1}{\PYZsh{}Load the list of texts into a TextCollection object.}
+             \PY{n}{collection} \PY{o}{=} \PY{n}{nltk}\PY{o}{.}\PY{n}{TextCollection}\PY{p}{(}\PY{n}{texts}\PY{p}{)}
+
+             \PY{c+c1}{\PYZsh{}get a list of unique terms}
+             \PY{n}{unique\PYZus{}terms} \PY{o}{=} \PY{n+nb}{list}\PY{p}{(}\PY{n+nb}{set}\PY{p}{(}\PY{n}{collection}\PY{p}{)}\PY{p}{)}
+
+             \PY{k}{if} \PY{n}{verbose}\PY{p}{:}
+                 \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Creando collecion de }\PY{l+s+si}{\PYZpc{}d}\PY{l+s+s2}{ terminos}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{n+nb}{len}\PY{p}{(}\PY{n}{collection}\PY{p}{)}\PY{p}{)}
+                 \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Terminos unicos encontrados: }\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{unique\PYZus{}terms}\PY{p}{)}\PY{p}{)}
+
+             \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{} And here we actually call the function and create our array of vectors.}
+             \PY{n}{vectors} \PY{o}{=} \PY{p}{[}\PY{n}{numpy}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{measure}\PY{p}{(}\PY{n}{f}\PY{p}{,}\PY{n}{unique\PYZus{}terms}\PY{p}{,} \PY{n}{collection}\PY{p}{)}\PY{p}{)} \PY{k}{for} \PY{n}{f} \PY{o+ow}{in} \PY{n}{texts}\PY{p}{]}
+
+             \PY{c+c1}{\PYZsh{} initialize the clusterer}
+             \PY{n}{clusterer} \PY{o}{=} \PY{n}{AgglomerativeClustering}\PY{p}{(}\PY{n}{n\PYZus{}clusters}\PY{o}{=}\PY{n}{cluster\PYZus{}number}\PY{p}{,}
+                                               \PY{n}{linkage}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{average}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{affinity}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{cosine}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{clusters} \PY{o}{=} \PY{n}{clusterer}\PY{o}{.}\PY{n}{fit\PYZus{}predict}\PY{p}{(}\PY{n}{vectors}\PY{p}{)}
+
+             \PY{k}{return} \PY{n}{clusters}
+\end{Verbatim}
+
+
+    Para gestionar los diferentes casos, hemos generado unos métodos y
+funciones de ayuda para simplemente implementar una función que reciba
+un fichero de entrada y devuelva la lista de términos que serán
+analizados por el algoritmo de clusterización.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}47}]:} \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+         \PY{l+s+sd}{Decoradores auxiliares.}
+         \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+
+         \PY{k}{def} \PY{n+nf}{timer\PYZus{}decorator}\PY{p}{(}\PY{n}{func}\PY{p}{)}\PY{p}{:}
+             \PY{k}{def} \PY{n+nf}{func\PYZus{}wrapper}\PY{p}{(}\PY{o}{*}\PY{n}{args}\PY{p}{,} \PY{o}{*}\PY{o}{*}\PY{n}{kwargs}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{start} \PY{o}{=} \PY{n}{time}\PY{p}{(}\PY{p}{)}
+                 \PY{n}{res} \PY{o}{=} \PY{n}{func}\PY{p}{(}\PY{o}{*}\PY{n}{args}\PY{p}{,} \PY{o}{*}\PY{o}{*}\PY{n}{kwargs}\PY{p}{)}
+                 \PY{n}{end} \PY{o}{=} \PY{n}{time}\PY{p}{(}\PY{p}{)}
+                 \PY{n}{diff\PYZus{}time} \PY{o}{=} \PY{n}{end} \PY{o}{\PYZhy{}} \PY{n}{start}
+                 \PY{k}{if} \PY{p}{(}\PY{n}{diff\PYZus{}time} \PY{o}{\PYZlt{}} \PY{l+m+mi}{60}\PY{p}{)}\PY{p}{:}
+                     \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Tiempo total de ejecución }\PY{l+s+si}{\PYZob{}:.2f\PYZcb{}}\PY{l+s+s2}{ segundos}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{diff\PYZus{}time}\PY{p}{)}\PY{p}{)}
+                 \PY{k}{else}\PY{p}{:}
+                     \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Tiempo total de ejecución }\PY{l+s+si}{\PYZob{}:.2f\PYZcb{}}\PY{l+s+s2}{ minutos}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{diff\PYZus{}time}\PY{o}{/}\PY{l+m+mi}{60}\PY{p}{)}\PY{p}{)}
+                 \PY{k}{return} \PY{n}{res}
+             \PY{k}{return} \PY{n}{func\PYZus{}wrapper}
+
+
+         \PY{n}{cases} \PY{o}{=} \PY{n+nb}{list}\PY{p}{(}\PY{p}{)}
+
+
+         \PY{k}{def} \PY{n+nf}{register\PYZus{}case}\PY{p}{(}\PY{n}{func}\PY{p}{)}\PY{p}{:}
+             \PY{n}{cases}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{func}\PY{p}{)}
+             \PY{k}{def} \PY{n+nf}{func\PYZus{}wrapper}\PY{p}{(}\PY{o}{*}\PY{n}{args}\PY{p}{)}\PY{p}{:}
+                 \PY{k}{return} \PY{n}{func}\PY{p}{(}\PY{o}{*}\PY{n}{args}\PY{p}{)}
+             \PY{k}{return} \PY{n}{func\PYZus{}wrapper}
+
+
+         \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+         \PY{l+s+sd}{Funciones auxiliares para pintar.}
+         \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+
+         \PY{k}{def} \PY{n+nf}{print\PYZus{}cases}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+             \PY{n+nb}{print}\PY{p}{(}\PY{p}{)}
+             \PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{n}{func} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{cases}\PY{p}{)}\PY{p}{:}
+                 \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{ .\PYZhy{} }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{i} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{func}\PY{o}{.}\PY{n+nv+vm}{\PYZus{}\PYZus{}doc\PYZus{}\PYZus{}}\PY{p}{)}\PY{p}{)}
+
+
+         \PY{k}{def} \PY{n+nf}{print\PYZus{}score}\PY{p}{(}\PY{n}{score}\PY{p}{)}\PY{p}{:}
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{La puntuacion obtenida ha sido: }\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{score}\PY{p}{)}
+
+
+         \PY{k}{def} \PY{n+nf}{print\PYZus{}clusters\PYZus{}table}\PY{p}{(}\PY{n}{test}\PY{p}{)}\PY{p}{:}
+             \PY{n}{df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{o}{.}\PY{n}{from\PYZus{}items}\PY{p}{(}\PY{p}{[}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Idiomas}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{LANG\PYZus{}REF}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Ref.}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{REFERENCE}\PY{p}{)}\PY{p}{,}
+                     \PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Test}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{test}\PY{p}{)}\PY{p}{]}\PY{p}{,} \PY{n}{orient}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{index}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{columns}\PY{o}{=}\PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{test}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+             \PY{n}{display}\PY{p}{(}\PY{n}{df}\PY{p}{)}
+
+
+         \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+         \PY{l+s+sd}{Evaluadores. Metodos usados para ejecutar los casos.}
+         \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+
+         \PY{k}{def} \PY{n+nf}{\PYZus{}evaluate}\PY{p}{(}\PY{n}{func}\PY{p}{,} \PY{n}{corpus\PYZus{}dir}\PY{p}{,} \PY{n}{verbose}\PY{p}{,} \PY{n}{measure}\PY{p}{)}\PY{p}{:}
+             \PY{n}{texts} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{k}{for} \PY{n}{path} \PY{o+ow}{in} \PY{n+nb}{sorted}\PY{p}{(}\PY{p}{[}\PY{n}{f} \PY{k}{for} \PY{n}{f} \PY{o+ow}{in} \PY{n}{os}\PY{o}{.}\PY{n}{listdir}\PY{p}{(}\PY{n}{corpus\PYZus{}dir}\PY{p}{)}
+                                 \PY{k}{if} \PY{n}{f}\PY{o}{.}\PY{n}{endswith}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{.txt}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{]}\PY{p}{)}\PY{p}{:}
+                 \PY{k}{with} \PY{n+nb}{open}\PY{p}{(}\PY{n}{os}\PY{o}{.}\PY{n}{path}\PY{o}{.}\PY{n}{join}\PY{p}{(}\PY{n}{corpus\PYZus{}dir}\PY{p}{,} \PY{n}{path}\PY{p}{)}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{r}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)} \PY{k}{as} \PY{n}{f\PYZus{}}\PY{p}{:}
+                     \PY{n}{tokens} \PY{o}{=} \PY{n}{func}\PY{p}{(}\PY{n}{f\PYZus{}}\PY{p}{)}
+                     \PY{n}{texts}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{nltk}\PY{o}{.}\PY{n}{Text}\PY{p}{(}\PY{n}{tokens}\PY{p}{)}\PY{p}{)}
+             \PY{n}{test} \PY{o}{=} \PY{n}{cluster\PYZus{}texts}\PY{p}{(}\PY{n}{texts}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{cosine}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{verbose}\PY{p}{,} \PY{n}{measure}\PY{p}{)}
+             \PY{k}{if} \PY{n}{verbose}\PY{p}{:}
+                 \PY{n}{print\PYZus{}clusters\PYZus{}table}\PY{p}{(}\PY{n}{test}\PY{p}{)}
+             \PY{k}{return} \PY{n}{adjusted\PYZus{}rand\PYZus{}score}\PY{p}{(}\PY{n}{REFERENCE}\PY{p}{,} \PY{n}{test}\PY{p}{)}
+
+
+         \PY{n+nd}{@timer\PYZus{}decorator}
+         \PY{k}{def} \PY{n+nf}{evaluate}\PY{p}{(}\PY{n}{func}\PY{p}{,} \PY{n}{corpus\PYZus{}dir}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{./corpus\PYZus{}text}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{measure}\PY{o}{=}\PY{n}{TF}\PY{p}{)}\PY{p}{:}
+             \PY{k}{return} \PY{n}{\PYZus{}evaluate}\PY{p}{(}\PY{n}{func}\PY{p}{,} \PY{n}{corpus\PYZus{}dir}\PY{p}{,} \PY{k+kc}{True}\PY{p}{,} \PY{n}{measure}\PY{p}{)}
+
+
+         \PY{k}{def} \PY{n+nf}{evaluate\PYZus{}all}\PY{p}{(}\PY{n}{corpus\PYZus{}dir}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{./corpus\PYZus{}text}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{measure}\PY{o}{=}\PY{n}{TF}\PY{p}{)}\PY{p}{:}
+             \PY{n}{scores} \PY{o}{=} \PY{n+nb}{list}\PY{p}{(}\PY{p}{)}
+             \PY{k}{for} \PY{n}{case} \PY{o+ow}{in} \PY{n}{cases}\PY{p}{:}
+                 \PY{n}{scores}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{\PYZus{}evaluate}\PY{p}{(}\PY{n}{case}\PY{p}{,} \PY{n}{corpus\PYZus{}dir}\PY{p}{,} \PY{k+kc}{False}\PY{p}{,} \PY{n}{measure}\PY{p}{)}\PY{p}{)}
+
+             \PY{n}{df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{scores}\PY{p}{,} \PY{n}{columns}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Scores}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,}
+                               \PY{n}{index}\PY{o}{=}\PY{p}{[}\PY{n}{f}\PY{o}{.}\PY{n+nv+vm}{\PYZus{}\PYZus{}doc\PYZus{}\PYZus{}} \PY{k}{for} \PY{n}{f} \PY{o+ow}{in} \PY{n}{cases}\PY{p}{]}\PY{p}{)}
+             \PY{k}{return} \PY{n}{df}
+\end{Verbatim}
+
+
+     \subsection{Parser}
+
+    El parser lo hemos implementado como una herramienta separada del resto
+dentro del paquete utils.parser.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{k}{def} \PY{n+nf}{html2txt\PYZus{}parser}\PY{p}{(}\PY{n}{html\PYZus{}path}\PY{p}{,} \PY{n}{txt\PYZus{}path}\PY{p}{)}\PY{p}{:}
+            \PY{k}{with} \PY{n+nb}{open}\PY{p}{(}\PY{n}{html\PYZus{}path}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{rb}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)} \PY{k}{as} \PY{n}{in\PYZus{}}\PY{p}{,} \PY{n+nb}{open}\PY{p}{(}\PY{n}{txt\PYZus{}path}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{a}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{k}{as} \PY{n}{out}\PY{p}{:}
+                \PY{n}{bs} \PY{o}{=} \PY{n}{bs4}\PY{p}{(}\PY{n}{in\PYZus{}}\PY{o}{.}\PY{n}{read}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lxml}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                \PY{p}{[}\PY{n}{out}\PY{o}{.}\PY{n}{write}\PY{p}{(}\PY{n}{p}\PY{o}{.}\PY{n}{get\PYZus{}text}\PY{p}{(}\PY{p}{)}\PY{p}{)} \PY{k}{for} \PY{n}{p} \PY{o+ow}{in} \PY{n}{bs}\PY{o}{.}\PY{n}{find\PYZus{}all}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{p}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{]}
+
+        \PY{k}{def} \PY{n+nf}{html2txt\PYZus{}parser\PYZus{}dir}\PY{p}{(}\PY{n}{in\PYZus{}path}\PY{p}{,} \PY{n}{out\PYZus{}path}\PY{o}{=}\PY{k+kc}{None}\PY{p}{)}\PY{p}{:}
+            \PY{n}{out\PYZus{}path} \PY{o}{=} \PY{n}{out\PYZus{}path} \PY{k}{if} \PY{n}{out\PYZus{}path} \PY{k}{else} \PY{n}{in\PYZus{}path}
+            \PY{k}{for} \PY{n}{html} \PY{o+ow}{in} \PY{p}{[}\PY{n}{h} \PY{k}{for} \PY{n}{h} \PY{o+ow}{in} \PY{n}{os}\PY{o}{.}\PY{n}{listdir}\PY{p}{(}\PY{n}{in\PYZus{}path}\PY{p}{)} \PY{k}{if} \PY{n}{h}\PY{o}{.}\PY{n}{endswith}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{.html}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{]}\PY{p}{:}
+                \PY{n}{html2txt\PYZus{}parser}\PY{p}{(}\PY{n}{os}\PY{o}{.}\PY{n}{path}\PY{o}{.}\PY{n}{join}\PY{p}{(}\PY{n}{in\PYZus{}path}\PY{p}{,} \PY{n}{html}\PY{p}{)}\PY{p}{,}
+                                \PY{n}{os}\PY{o}{.}\PY{n}{path}\PY{o}{.}\PY{n}{join}\PY{p}{(}\PY{n}{out\PYZus{}path}\PY{p}{,} \PY{n}{html}\PY{o}{.}\PY{n}{replace}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{html}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{txt}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    Para poder usarlo es necesario tener instalado el parseador de xml para
+python \emph{lxml}. Este parseador es más potente que \emph{html.parser}
+(el que viene instalado por defecto).
+
+Tras analizar las web que conformaban nuestro corpus, concluimos que el
+contenido importante se encontraba dentro de tags \textbf{p} de HTML,
+por lo que nuestro parseador se limita a buscar estos tipos de elementos
+y extraer su contenido de texto.
+
+El texto extraido de los distintos ficheros \emph{.html} es guardado en
+un directorio diferente en ficheros cuyos nombres corresponden al del
+fichero HTML leido, cambiandole la extensión a \emph{.txt}.
+
+
+    % Add a bibliography block to the postdoc
+
+
+
+    \end{document}
